@@ -1,0 +1,74 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-image: url("./startBG.avif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+canvas {
+  border: 5px solid #32CD32;
+  display: block;
+  margin: auto;
+  background-color: black;
+}
+
+.highScore, .score, .lives {
+  font-family: Arial;
+  font-weight: bold;
+  background-color: gold;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.controls button {
+  width: 100px;
+  height: 50px;
+  font-size: 16px;
+  margin: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.moveLeft, .moveRight {
+  background-color: green;
+}
+
+.shoot {
+  background-color: orange;
+}
+
+.start {
+  background-color: orange;
+  font-size: large;
+  padding: 10px 20px;
+}
+
+.usernameInput {
+  text-align: center;
+  color: white;
+
+}
+
+.input{
+    height: 37px;
+    width: 300px;
+}
+
+.enterName{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #32CD32;
+}
