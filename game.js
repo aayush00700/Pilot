@@ -20,18 +20,13 @@ document.querySelector('.start').addEventListener('click', () => {
   `;
   game();
   bgMusic.play();
-  setTimeout(()=>{
-    console.log("after 2 second")
-  }, 2000);
 });
 
-
 const bgMusic = document.getElementById('bgMusic');
-bgMusic.volume = 1;
+bgMusic.volume = 0.3; // reduced volume for comfort
 
 let canShoot = true;
-let shootCooldown = 90; // milliseconds
-
+let shootCooldown = 90;
 
 function game() {
   const canvas = document.getElementById("gameCanvas");
@@ -67,7 +62,6 @@ function game() {
     setTimeout(() => canShoot = true, shootCooldown);
   }
 
-
   function spawnObstacle() {
     const x = Math.random() * (canvas.width - 30) + 15;
     const y = 0;
@@ -102,7 +96,6 @@ function game() {
 
   function updateObstacles() {
     for (let obs of obstacles) obs.y += obstacleSpeed;
-
     for (let i = obstacles.length - 1; i >= 0; i--) {
       if (obstacles[i].y > canvas.height) {
         obstacles.splice(i, 1);
@@ -194,14 +187,39 @@ function game() {
     requestAnimationFrame(gameLoop);
   }
 
-  setInterval(spawnObstacle, spawnInterval);
-  document.querySelector(".moveLeft").onmousedown = () => moveLeft = true;
-  document.querySelector(".moveLeft").onmouseup = () => moveLeft = false;
-  document.querySelector(".moveRight").onmousedown = () => moveRight = true;
-  document.querySelector(".moveRight").onmouseup = () => moveRight = false;
-  document.querySelector(".shoot").onmousedown = () => shooting = true;
-  document.querySelector(".shoot").onmouseup = () => shooting = false;
+  // CONTROLS (Mouse + Touch support)
+  const moveLeftBtn = document.querySelector(".moveLeft");
+  const moveRightBtn = document.querySelector(".moveRight");
+  const shootBtn = document.querySelector(".shoot");
 
+  // Move Left
+  moveLeftBtn.addEventListener("mousedown", () => moveLeft = true);
+  moveLeftBtn.addEventListener("mouseup", () => moveLeft = false);
+  moveLeftBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveLeft = true;
+  }, { passive: false });
+  moveLeftBtn.addEventListener("touchend", () => moveLeft = false);
+
+  // Move Right
+  moveRightBtn.addEventListener("mousedown", () => moveRight = true);
+  moveRightBtn.addEventListener("mouseup", () => moveRight = false);
+  moveRightBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveRight = true;
+  }, { passive: false });
+  moveRightBtn.addEventListener("touchend", () => moveRight = false);
+
+  // Shoot
+  shootBtn.addEventListener("mousedown", () => shooting = true);
+  shootBtn.addEventListener("mouseup", () => shooting = false);
+  shootBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    shooting = true;
+  }, { passive: false });
+  shootBtn.addEventListener("touchend", () => shooting = false);
+
+  // KEYBOARD SUPPORT
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") moveLeft = true;
     if (e.key === "ArrowRight") moveRight = true;
@@ -216,4 +234,5 @@ function game() {
 
   showHUD();
   gameLoop();
+  setInterval(spawnObstacle, spawnInterval);
 }
